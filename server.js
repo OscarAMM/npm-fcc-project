@@ -28,22 +28,22 @@ app.get('/api/timestamp/:date?', function (req, res) {
             utc: utc
         });
     } else {
-        var integer_date = parseInt(req.params.date);
+        var date_string = parseInt(req.params.date);
         var string_date = req.params.date;
         var verification = new Date(string_date).toUTCString();
         var integer_date_unix = new Date(string_date).valueOf();
         console.log(verification);
-        console.log(integer_date);
-        if ((unix_format.test(integer_date_unix) && verification != "Invalid Date") ) {
+        console.log(date_string);
+        if (verification != "Invalid Date") {
             //var date_integer = parseInt(req.params.date);
             res.json({
                 unix: integer_date_unix,
-                utc: new Date(integer_date).toUTCString(),
+                utc: verification,
             });
-        } else if(unix_format.test(integer_date)) {
+        } else if(unix_format.test(date_string)) {
             res.json({
-                unix: integer_date,
-                utc: new Date(integer_date).toUTCString(),
+                unix: date_string,
+                utc: new Date(date_string).toUTCString(),
             });
         }else{
             res.json({
