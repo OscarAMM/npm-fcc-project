@@ -18,21 +18,32 @@ app.get('/api/hello', function (req, res) {
 app.get('/api/timestamp/:date?', function (req, res) {
     var utc = new Date().toUTCString();
     var unix = new Date().valueOf();
-    console.log(req.params.date)
+    var parameter = req.params.date;
+    console.log(req.params.date);
     var unix_format = /\d{5,}/;
-    
+
     if (!req.params.date) {
         res.json({
             unix: unix,
             utc: utc
         });
     } else {
-        if(req.params.date != "Invalid Date" || unix_format.test(req.params.date)){
-            var date_string = parseInt(req.params.date);
-            console.log(date_string);
+        var integer_date = parseInt(req.params.date);
+        var string_date = req.params.date;
+        var verification = new Date(string_date).toUTCString();
+        var integer_date_unix = new Date(string_date).valueOf();
+        console.log(verification);
+        console.log(integer_date);
+        if ((unix_format.test(integer_date_unix) && verification != "Invalid Date") ) {
+            //var date_integer = parseInt(req.params.date);
             res.json({
-                unix: date_string,
-                utc: new Date(date_string).toUTCString(),
+                unix: integer_date_unix,
+                utc: new Date(integer_date).toUTCString(),
+            });
+        } else if(unix_format.test(integer_date)) {
+            res.json({
+                unix: integer_date,
+                utc: new Date(integer_date).toUTCString(),
             });
         }else{
             res.json({
