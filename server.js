@@ -13,8 +13,7 @@ app.get('/api/hello', function (req, res) {
         greetings: "Hello"
     });
 });
-/**Option one***/
-
+/**Project challenge one***/
 app.get('/api/timestamp/:date?', function (req, res) {
     var utc = new Date().toUTCString();
     var unix = new Date().valueOf();
